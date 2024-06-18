@@ -12,6 +12,14 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Section;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Forms\Components\DateTimePicker;
 
 class UserResource extends Resource
 {
@@ -23,26 +31,35 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Section::make('')
+                ->description('Enter User Details')
+                ->schema([
+                    TextInput::make('name')->label('Name')->required(),
+                    TextInput::make('email')->label('Email')->required()->unique(ignoreRecord:true)->email(),                     
+                    DateTimePicker::make('email_verified_at')->label('Email Verified At'),
+                    TextInput::make('password')->label('Password')->required()->password()->revealable(),
+                ])
+             
             ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
-            ->columns([
-                //
+            ->columns([ 
+                 TextColumn::make('id')->label('ID'),
+                 TextColumn::make('name')->label('Name')->searchable(),
+                 TextColumn::make('email')->label('Email')->searchable(),
+                 TextColumn::make('created_at')->label('Created At')->date()->sortable(),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                ActionGroup::make([
+                    ViewAction::make(),
+                    EditAction::make(),
+                    DeleteAction::make(),
                 ]),
             ]);
     }
@@ -59,7 +76,7 @@ class UserResource extends Resource
         return [
             'index' => Pages\ListUsers::route('/'),
             'create' => Pages\CreateUser::route('/create'),
-            'view' => Pages\ViewUser::route('/{record}'),
+            // 'view' => Pages\ViewUser::route('/{record}'),
             'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
     }
