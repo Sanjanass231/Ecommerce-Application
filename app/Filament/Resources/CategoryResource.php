@@ -69,7 +69,7 @@ class CategoryResource extends Resource
                     '0' => 'warning',
                     '1' => 'success',
                 }),
-                TextColumn::make('created_at')->label('Created At')->date()->sortable(),
+                TextColumn::make('created_at')->label('Created At')->date()->sortable()->toggleable(isToggledHiddenByDefault:true),
             ])
             ->filters([
                 //

@@ -25,6 +25,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\Select;
 
 class BrandResource extends Resource
 {
@@ -69,7 +70,7 @@ class BrandResource extends Resource
                     '0' => 'warning',
                     '1' => 'success',
                 }),
-                TextColumn::make('created_at')->label('Created At')->date()->sortable(),
+                TextColumn::make('created_at')->label('Created At')->date()->sortable() ->toggleable(isToggledHiddenByDefault:true),
             ])
             ->filters([
                 //
