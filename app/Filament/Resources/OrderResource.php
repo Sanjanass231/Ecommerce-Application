@@ -3,10 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\OrderResource\Pages;
-use App\Filament\Resources\OrderResource\RelationManagers;
+use App\Filament\Resources\OrderResource\RelationManagers\AddressRelationManager;
 use App\Models\Order;
 use App\Models\Product;
 use Filament\Forms;
+use Filament\Resources\Components\Tab;
+use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Form;
 use Filament\Forms\Components\Hidden;
 use Filament\Resources\Resource;
@@ -36,7 +38,6 @@ use Illuminate\Support\Str;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Forms\Components\Repeater;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class OrderResource extends Resource
@@ -152,8 +153,7 @@ class OrderResource extends Resource
         return $table
         ->emptyStateHeading('No Orders yet')
         ->emptyStateDescription('Once we place first Order, it will appear here.')
-        ->emptyStateIcon('heroicon-o-bookmark')
-               
+        ->emptyStateIcon('heroicon-o-bookmark')         
             ->columns([
                 TextColumn::make('user.name')->sortable()->searchable()->label('User'),
                 TextColumn::make('grandTotal')->sortable()->numeric()->label('Grand Total')->money('INR'),
@@ -185,7 +185,7 @@ class OrderResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            AddressRelationManager::class,
         ];
     }
 

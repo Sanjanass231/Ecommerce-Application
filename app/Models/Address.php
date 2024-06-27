@@ -10,7 +10,7 @@ class Address extends Model
 {
     use HasFactory;
     protected $fillable = [
-       'order_id','firstName','lastName','phone','streetAddress','city','state','zipode'
+       'order_id','firstName','lastName','phone','streetAddress','city','state','zipCode'
     ];
 
     public function order(){
