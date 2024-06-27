@@ -20,6 +20,7 @@ use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\MarkdownEditor;
+use Filament\Tables\Columns\SelectColumn;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Tables\Columns\TextColumn;
@@ -152,20 +153,31 @@ class OrderResource extends Resource
         ->emptyStateHeading('No Orders yet')
         ->emptyStateDescription('Once we place first Order, it will appear here.')
         ->emptyStateIcon('heroicon-o-bookmark')
-     
+               
             ->columns([
-                //
+                TextColumn::make('user.name')->sortable()->searchable()->label('User'),
+                TextColumn::make('grandTotal')->sortable()->numeric()->label('Grand Total')->money('INR'),
+                TextColumn::make('paymentMethod')->sortable()->searchable()->label('Payment Method'),
+                TextColumn::make('paymentStatus')->sortable()->searchable()->label('Payment Status'),
+                SelectColumn::make('status')->options(['new'=>'New',
+                'processing'=>'Processing',
+                'shipped'=>'Shipped',
+                'delivered'=>'Delivered',
+                'canceled'=>'Canceled',
+                ])->label('Status')->sortable()->searchable(),
+                TextColumn::make('currency')->sortable()->searchable()->label('Currency'),
+                TextColumn::make('shippingMethod')->sortable()->searchable()->label('Shipping Method'),
+                TextColumn::make('created_at')->sortable()->label('Created At')->dateTime()->toggleable(isToggledHiddenByDefault:true),
+                TextColumn::make('updated_at')->sortable()->label('Created At')->dateTime()->toggleable(isToggledHiddenByDefault:true),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                ActionGroup::make([
+                    ViewAction::make(),
+                    EditAction::make(),
+                    DeleteAction::make(),
                 ]),
             ]);
     }
@@ -175,6 +187,10 @@ class OrderResource extends Resource
         return [
             //
         ];
+    }
+
+    public static function getNavigationBadge(): ?string{
+        return static::getModel()::count();
     }
 
     public static function getPages(): array
