@@ -30,7 +30,8 @@ use Filament\Forms\Components\Select;
 class BrandResource extends Resource
 {
     protected static ?string $model = Brand::class;
-
+    protected static ?string $recordTitleAttribute = 'name';
+    protected static ?int $navigationSort = 2;
     protected static ?string $navigationIcon = 'heroicon-o-tag';
 
     public static function form(Form $form): Form
