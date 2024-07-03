@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\Product;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use App\Livewire\Partials\Navbar;
 use App\Helpers\CartManagement;
 use App\Models\Brand;
@@ -13,6 +14,8 @@ use Livewire\Attributes\Url;
 #[Title('Products-Page')]
 class ProductsPage extends Component
 {
+    use LivewireAlert;
+
     #[Url]
     public $selected_categories = [];
 
@@ -34,6 +37,12 @@ class ProductsPage extends Component
  public function addToCart($productId){
        $totalCount = CartManagement::addItemToCart($productId);
        $this->dispatch('update-cart-count',totalCount:$totalCount)->to(Navbar::class);
+
+       $this->alert('success', 'product added to the cart successfully!', [
+              'position' => 'bottom-end',
+              'timer' => 3000,
+              'toast' => true,
+             ]);
  }
     public function render()
     {
