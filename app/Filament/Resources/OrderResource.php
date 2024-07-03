@@ -123,7 +123,7 @@ class OrderResource extends Resource
                ->reactive()
                ->afterStateUpdated(fn (?string $state, Set $set)=>$set('unitAmount',Product::find($state)->price ?? 0 ))  
                ->afterStateUpdated(fn (?string $state, Set $set)=>$set('totalAmount',Product::find($state)->price ?? 0 )),
-             TextInput::make('quatity')->numeric()->required()->default(1)->minValue(1)->columnSpan(2)
+             TextInput::make('quantity')->numeric()->required()->default(1)->minValue(1)->columnSpan(2)
              ->reactive()->afterStateUpdated(fn (?string $state, Set $set, Get $get)=>$set('totalAmount',$state * $get('unitAmount') )) ,
             TextInput::make('unitAmount')->numeric()->dehydrated()->required()->readOnly()->columnSpan(3),
             TextInput::make('totalAmount')->numeric()->required()->columnSpan(3)

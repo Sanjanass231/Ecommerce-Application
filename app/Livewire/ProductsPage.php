@@ -4,6 +4,8 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\Product;
+use App\Livewire\Partials\Navbar;
+use App\Helpers\CartManagement;
 use App\Models\Brand;
 use App\Models\Category;
 use Livewire\Attributes\Url;
@@ -28,7 +30,11 @@ class ProductsPage extends Component
 
     #[Url]
     public $sort = 'latest';
-
+// add product to cart
+ public function addToCart($productId){
+       $totalCount = CartManagement::addItemToCart($productId);
+       $this->dispatch('update-cart-count',totalCount:$totalCount)->to(Navbar::class);
+ }
     public function render()
     {
         $productQuery = Product::query()->where('isActive',1);
