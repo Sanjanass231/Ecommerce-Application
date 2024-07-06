@@ -67,8 +67,7 @@
           </div>
           @if($cartItems)
           <a wire:navigate href="/checkout" class="bg-blue-500 block text-center text-white py-2 px-4 rounded-lg mt-4 w-full">Checkout</a>
-          @endif
-         
+          @endif  
         </div>
       </div>
     </div>
