@@ -6,8 +6,10 @@ use Livewire\Attributes\Title;
 use Livewire\Component;
 use App\Models\Order;
 use App\Models\Address;
+use App\Mail\OrderPlaced;
 use Stripe\Stripe;
 use Stripe\Checkout\Session;
+use Illuminate\Support\Facades\Mail;
 use App\Helpers\CartManagement;
 
 #[Title('Checkout Page')]
@@ -125,6 +127,7 @@ public function placeOrder()
       $address->save();
       $order->items()->createMany($cartItems);
       CartManagement::clearCartItems();
+      Mail::to(request()->user())->send(new OrderPlaced($order));
       return redirect($redirectUrl);
     
 }
