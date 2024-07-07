@@ -19,13 +19,14 @@
               @foreach($orders as $order)
               @php
               $status = '';
-               $paymentStatus ='';
-               if($order->paymentStatus == 'paid')
+              $paymentStatus ='';
+                if($order->paymentStatus == 'paid')
               $paymentStatus = '<span class="bg-green-500 py-1 px-3 rounded text-white shadow">Paid</span>';
               if($order->paymentStatus == 'pending')
               $paymentStatus = '<span class="bg-yellow-500 py-1 px-3 rounded text-white shadow">Pending</span>';
               if($order->paymentStatus == 'failed')
               $paymentStatus = '<span class="bg-red-500 py-1 px-3 rounded text-white shadow">Failed</span>';
+             
               if($order->status == 'new')
               $status = '<span class="bg-blue-500 py-1 px-3 rounded text-white shadow">New</span>';
               if($order->status == 'processing')
@@ -36,6 +37,7 @@
               $status = '<span class="bg-green-700 py-1 px-3 rounded text-white shadow">Delivered</span>';
               if($order->status == 'shipped')
               $status = '<span class="bg-green-500 py-1 px-3 rounded text-white shadow">Shipped</span>';
+            
               @endphp
               <tr class="odd:bg-white even:bg-gray-100 dark:odd:bg-slate-900 dark:even:bg-slate-800" wire:key='{{$order->id}}'>
                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">{{$order->id}}</td>
