@@ -13,13 +13,13 @@ use Illuminate\Support\Str;
 #[Title('Reset Password')]
 class ResetPasswordPage extends Component
 {   
+    public $token;
     #[Url] 
     public $email;
-    public $token;
     public $password;
     public $password_confirmation;
 
-    public function mount($mount){
+    public function mount($token){
         $this->token = $token;
     }
 
@@ -27,14 +27,15 @@ class ResetPasswordPage extends Component
         $this->validate([
             'token'=>'required',
             'email'=>'required|email',
-             'password'=>'required|min:8|max:20|confirmed',
+            'password'=>'required|min:8|max:20|confirmed',
         ]);
 
-        $status = Password::reset([
-  'email'=>$this->email,
-  'password'=>$this->password,
-  'password_confirmation'=>$this->password_confirmation,
-  'token'=>$this->token
+        $status = Password::reset(
+            [
+             'email'=>$this->email,
+             'password'=>$this->password,
+             'password_confirmation'=>$this->password_confirmation,
+             'token'=>$this->token
         ],
         function(User $user, string $password){
             $password = $this->password;

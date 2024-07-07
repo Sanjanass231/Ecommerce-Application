@@ -15,7 +15,7 @@ class ForgotPasswordPage extends Component
         $this->validate([
             'email'=>'required|email|max:255|exists:users'
         ]);
-        $status = Password::sendResponseLink(['email'=>$this->email]);
+        $status = Password::sendResetLink(['email'=>$this->email]);
 
         if($status === Password::RESET_LINK_SENT){
             session()->flash('success','Password reset link has been sent to your email address!');

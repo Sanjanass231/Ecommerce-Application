@@ -192,7 +192,7 @@
 				</div>
 				<ul class="divide-y divide-gray-200 dark:divide-gray-700" role="list">
       @foreach($cartItems as $cartItem)
-          <li class="py-3 sm:py-4" wire:key = "{{$cartItem['product_id']}}">
+           <li class="py-3 sm:py-4" wire:key = "{{$cartItem['product_id']}}">
 						<div class="flex items-center">
 							<div class="flex-shrink-0">
 								<img alt="{{$cartItem['name']}}" class="w-12 h-12 rounded-full" src="{{url('storage',$cartItem['image'])}}">
@@ -203,16 +203,15 @@
 									{{$cartItem['name']}}
 								</p>
 								<p class="text-sm text-gray-500 truncate dark:text-gray-400">
-								{{$cartItem['quantity']}}
+								Quantity: {{$cartItem['quantity']}}
 								</p>
 							</div>
 							<div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
 							{{Number::currency($cartItem['totalAmount'],'INR')}}
 							</div>
 						</div>
-					</li>
-         @endforeach
-					
+		</li>
+      @endforeach
 				</ul>
 			</div>
 		</div>
